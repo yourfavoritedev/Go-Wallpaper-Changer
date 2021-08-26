@@ -52,16 +52,29 @@ func CreateListWidget(list []string) {
 	term.Render(l)
 	uiEvents := term.PollEvents()
 
+	// enables wrap-around list
+	previousSelectedRow := l.SelectedRow
+
 	for {
 		e := <-uiEvents
 		switch e.ID {
 		case "q", "<C-c>":
 			return
 		case "w":
-			l.ScrollUp()
+			if previousSelectedRow == 0 {
+				l.SelectedRow = len(list) - 1
+			} else {
+				l.ScrollUp()
+			}
+
 		case "s":
-			l.ScrollDown()
+			if previousSelectedRow == len(list)-1 {
+				l.SelectedRow = 0
+			} else {
+				l.ScrollDown()
+			}
 		}
+		previousSelectedRow = l.SelectedRow
 		term.Render(l)
 
 		// update power-shell script file
