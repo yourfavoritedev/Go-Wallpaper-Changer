@@ -3,7 +3,6 @@ package ui
 import (
 	"log"
 	"os"
-	"strings"
 
 	term "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
@@ -11,17 +10,13 @@ import (
 	"github.com/yourfavoritedev/background-changer/ps"
 )
 
-func GetInitialFilename() string {
+func GetInitialFilename() (result string) {
 	b, err := helpers.ReadFile(ps.PSScriptPath)
 	if err != nil {
-		return ""
+		return
 	}
 	content := string(b)
-	s := strings.Index(content, ps.ReplaceStart)
-	s += len(ps.ReplaceStart)
-	e := strings.Index(content[s:], ps.ReplaceEnd)
-	e += s - 1
-	currentWallPaperPath := content[s:e]
+	currentWallPaperPath := helpers.GetStringInBetween(content, ps.ReplaceLeft, ps.ReplaceRight)
 	wallPaperDir := os.Getenv("wallpapersDir")
 	currentFileName := currentWallPaperPath[len(wallPaperDir)+1 : len(currentWallPaperPath)-1]
 	return currentFileName

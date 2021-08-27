@@ -27,3 +27,17 @@ func WriteFile(filename string, data []byte) error {
 func ReplaceText(content, old, new string) string {
 	return strings.Replace(content, old, new, 1)
 }
+
+func GetStringInBetween(str, left, right string) (result string) {
+	s := strings.Index(str, left)
+	if s == -1 {
+		return
+	}
+	s += len(left)
+	e := strings.Index(str[s:], right)
+	if e == -1 {
+		return
+	}
+	e += s
+	return str[s:e]
+}

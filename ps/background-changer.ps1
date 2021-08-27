@@ -1,4 +1,4 @@
-$imgPath = "C:/Users/13236/Documents/wallpapers/nobara.jpg"
+$imgPath = "C:/Users/13236/Documents/wallpapers/geto.jpg"
 $code = @' 
 using System.Runtime.InteropServices; 
 namespace Win32{ 

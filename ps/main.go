@@ -3,7 +3,6 @@ package ps
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	ps "github.com/bhendo/go-powershell"
 	"github.com/bhendo/go-powershell/backend"
@@ -13,8 +12,8 @@ import (
 const (
 	PSCmdlet     = "change-background"
 	PSScriptPath = "C:/Users/13236/go/src/github.com/yourfavoritedev/background-changer/ps/background-changer.ps1"
-	ReplaceStart = "$imgPath = "
-	ReplaceEnd   = "$code"
+	ReplaceLeft  = "$imgPath = "
+	ReplaceRight = "\n$code"
 )
 
 func ApplyChanges(filename string) {
@@ -25,11 +24,7 @@ func ApplyChanges(filename string) {
 
 	content := string(b)
 	// replace filename path
-	s := strings.Index(content, ReplaceStart)
-	s += len(ReplaceStart)
-	e := strings.Index(content[s:], ReplaceEnd)
-	e += s - 1
-	currentWallPaperPath := content[s:e]
+	currentWallPaperPath := helpers.GetStringInBetween(content, ReplaceLeft, ReplaceRight)
 	newWallPaperPath := fmt.Sprintf("%s%s%s%s", "\"", os.Getenv("wallpapersDir"), filename, "\"")
 	updatedContent := helpers.ReplaceText(content, currentWallPaperPath, newWallPaperPath)
 	err = helpers.WriteFile(PSScriptPath, []byte(updatedContent))
