@@ -7,18 +7,17 @@ import (
 	term "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
 	"github.com/yourfavoritedev/background-changer/helpers"
-	"github.com/yourfavoritedev/background-changer/ps"
+	"github.com/yourfavoritedev/background-changer/wallpaper"
 )
 
 func GetInitialFilename() (result string) {
-	b, err := helpers.ReadFile(ps.PSScriptPath)
+	b, err := helpers.ReadFile(wallpaper.CurrentWallPaperPath)
 	if err != nil {
 		return
 	}
 	content := string(b)
-	currentWallPaperPath := helpers.GetStringInBetween(content, ps.ReplaceLeft, ps.ReplaceRight)
 	wallPaperDir := os.Getenv("wallpapersDir")
-	currentFileName := currentWallPaperPath[len(wallPaperDir)+1 : len(currentWallPaperPath)-1]
+	currentFileName := content[len(wallPaperDir):]
 	return currentFileName
 }
 
@@ -75,6 +74,6 @@ func CreateListWidget(list []string) {
 		// update power-shell script file
 		selectedIndex := l.SelectedRow
 		selectedImageFilename := list[selectedIndex]
-		ps.ApplyChanges(selectedImageFilename)
+		wallpaper.ApplyChanges(selectedImageFilename)
 	}
 }
