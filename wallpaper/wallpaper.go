@@ -46,7 +46,7 @@ func SetWallpaper(filename string) error {
 		uintptr(spiSetdeskwallpaper),              // DLL Message
 		uintptr(uiParam),                          // UI Param
 		uintptr(unsafe.Pointer(filenameUTF16Ptr)), // User argument e.g. file name
-		uintptr(pifUpdateINIFile|spifSendChange),  // we want to update the user profile and set this change into registry
+		uintptr(pifUpdateINIFile|spifSendChange),  // use bitwise OR to get the bits 1 OR 2, we want to update the user profile and set this change into registry
 	)
 
 	return nil
