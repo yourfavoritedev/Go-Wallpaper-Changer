@@ -5,11 +5,21 @@ import (
 	"log"
 	"os"
 
+	"github.com/yourfavoritedev/background-changer/helpers"
 	"github.com/yourfavoritedev/background-changer/ui"
+	"github.com/yourfavoritedev/background-changer/wallpaper"
 )
 
 func init() {
 	os.Setenv("wallpapersDir", "C:/Users/13236/Documents/wallpapers/")
+	// create cache file if it doesn't exist
+	_, err := helpers.ReadFile(wallpaper.CurrentWallPaperPath)
+	if err != nil {
+		err = helpers.WriteFile(wallpaper.CurrentWallPaperPath, []byte{})
+		if err != nil {
+			return
+		}
+	}
 }
 
 func main() {

@@ -13,12 +13,16 @@ import (
 func GetInitialFilename() (result string) {
 	b, err := helpers.ReadFile(wallpaper.CurrentWallPaperPath)
 	if err != nil {
+		log.Fatalf("Error reading file: %v", err)
 		return
+	}
+	if len(b) == 0 {
+		return result
 	}
 	content := string(b)
 	wallPaperDir := os.Getenv("wallpapersDir")
-	currentFileName := content[len(wallPaperDir):]
-	return currentFileName
+	result = content[len(wallPaperDir):]
+	return result
 }
 
 func CreateListWidget(list []string) {

@@ -1,15 +1,15 @@
 package helpers
 
 import (
+	"fmt"
 	"io/ioutil"
-	"log"
 	"strings"
 )
 
 func ReadFile(filename string) ([]byte, error) {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
-		log.Fatalf("Error reading file: %v", err)
+		fmt.Printf("Error reading file: %v\n", err)
 		return nil, err
 	}
 	return content, nil
@@ -18,7 +18,7 @@ func ReadFile(filename string) ([]byte, error) {
 func WriteFile(filename string, data []byte) error {
 	err := ioutil.WriteFile(filename, data, 0644)
 	if err != nil {
-		log.Fatalf("Error writing to file: %v", err)
+		fmt.Printf("Error writing to file: %v\n", err)
 		return err
 	}
 	return nil
