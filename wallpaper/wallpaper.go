@@ -15,7 +15,6 @@ const (
 
 // UI Params for windows
 const (
-	spiGetdeskwallpaper = 0x0073
 	spiSetdeskwallpaper = 0x0014
 
 	uiParam = 0x0000
@@ -44,7 +43,7 @@ func SetWallpaper(filename string) error {
 	}
 
 	systemParametersInfoW.Call(
-		uintptr(spiSetdeskwallpaper),              // Message
+		uintptr(spiSetdeskwallpaper),              // DLL Message
 		uintptr(uiParam),                          // UI Param
 		uintptr(unsafe.Pointer(filenameUTF16Ptr)), // User argument e.g. file name
 		uintptr(pifUpdateINIFile|spifSendChange),  // we want to update the user profile and set this change into registry
