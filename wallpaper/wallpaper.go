@@ -15,12 +15,9 @@ const (
 
 // UI Params for windows
 const (
-	spiSetdeskwallpaper = 0x0014
-
-	uiParam = 0x0000
-
-	pifUpdateINIFile = 0x01
-	spifSendChange   = 0x02
+	spiSetdeskwallpaper         = 0x0014
+	uiParam                     = 0x0000
+	updateAndSetToRegistryParam = 0x0003
 )
 
 // user32.dll and its proc
@@ -46,7 +43,7 @@ func SetWallpaper(filename string) error {
 		uintptr(spiSetdeskwallpaper),              // DLL Message
 		uintptr(uiParam),                          // UI Param
 		uintptr(unsafe.Pointer(filenameUTF16Ptr)), // User argument e.g. file name
-		uintptr(pifUpdateINIFile|spifSendChange),  // use bitwise OR to get the bits 1 OR 2, we want to update the user profile and set this change into registry
+		uintptr(updateAndSetToRegistryParam),      // Param to update the user profile and set this change into registry
 	)
 
 	return nil
